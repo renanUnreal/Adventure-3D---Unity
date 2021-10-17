@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     bool isGrounded;
+    public Animator Anim_Player;
     void Start()
     {
         
@@ -33,7 +34,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if (move != Vector3.zero)
+        {
+            Anim_Player.SetBool("idle", false);
+        }
+        else
+        {
+            Anim_Player.SetBool("idle", true);
+        }
+        
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
         }
